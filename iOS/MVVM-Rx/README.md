@@ -2,7 +2,7 @@
 
 An iOS sample project showcasing 2 structured reactive programming approaches using ReactiveX.
 
-[](media/mvvm.png)
+![](media/mvvm.png)
 
 ## Background
 * A ViewModel...
@@ -13,10 +13,44 @@ An iOS sample project showcasing 2 structured reactive programming approaches us
 * it is not the way a View is built that is going to define the public contract of a ViewModel
 * it’s the View that owns the ViewModel, meaning; the View is aware of the ViewModel, not the other way around
 
+## Rx Contracts
+
+``` swift
+
+protocol ReactiveConnectable {
+    associatedtype Input
+    associatedtype Output
+}
+
+protocol ReactiveTransformable: ReactiveConnectable {
+    associatedtype Input
+    associatedtype Output
+
+    func transform(input: Input) -> Output
+}
+
+protocol ReactiveFeedable: ReactiveConnectable {
+    associatedtype Input
+    associatedtype Output
+
+    var input: Input { get }
+    var output: Output { get }
+}
+
+``` 
+
+
 ## Approaches
 
-### 1: Continuous input feeding: subjects and observables
-* Explain this boy ...
+### ReactiveTransformable: 
+* define an Input and Output struct
+* the `viewModel` defines a transformation method to transform the View inputs to observable outputs
+* no subjects, only observables / related traits
+* the transformation happens once for a certain view type, where all outputs are bound
 
-### 2: Single input -> output transformation: observables
-* Explain this boy ...
+### ReactiveFeedable
+* define an Input and Output struct
+* the `viewModel` holds stored Input and Output properties for continuous data feeding
+* each Input property has a related subject
+* all subjects are **private**
+* subjects expose so called `observers` as input references for public access `asObserver()`
