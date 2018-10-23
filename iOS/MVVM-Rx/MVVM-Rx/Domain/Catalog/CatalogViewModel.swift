@@ -95,5 +95,6 @@ extension CatalogViewModel: TableViewConfigurable {
         ]
     }
     var rowHeight: CGFloat { return 100.0 }
+    var sectionHeaderHeight: CGFloat { return 30.0 }
     var isStylePlain: Bool { return false }
 }
