@@ -28,12 +28,11 @@ final class MoviesViewModel {
     }
 }
 
-extension MoviesViewModel: ReactiveTransforming {
+extension MoviesViewModel: ReactiveTransformable {
     struct ViewControllerInput {
         let onViewWillAppear: Driver<()>
         let onCellTap: Driver<IndexPath>
     }
-
     struct ViewModelOutput {
         let observableMovies: Driver<[RefinedMovie]>
         let navigateToSimilarMovies: Driver<RefinedMovie>

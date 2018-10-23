@@ -34,7 +34,7 @@ final class CatalogViewModel {
     }
 }
 
-extension CatalogViewModel: ReactiveFeeding {
+extension CatalogViewModel: ReactiveFeedable {
     struct ViewInput {
         let searchTextInput: AnyObserver<String>
         let refreshInput: AnyObserver<Void>

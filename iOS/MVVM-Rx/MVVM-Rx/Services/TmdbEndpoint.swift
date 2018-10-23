@@ -14,14 +14,6 @@ enum TmdbEndpoint {
     static let baseUrlString = "https://api.themoviedb.org/3"
     static let apiKey = "91e3a1fc957cde9192fede75cedb96e2"
 
-    var pathString: String {
-        switch self {
-        case .popularMovies: return "/movie/popular"
-        case .popularActors: return "/person/popular"
-        case .similarMovies(let id): return "/movie/\(id)/similar"
-        }
-    }
-
     var url: URL {
         return TmdbEndpoint.constructUrl(baseUrlString: TmdbEndpoint.baseUrlString, pathString: self.pathString)
     }
@@ -30,6 +22,14 @@ enum TmdbEndpoint {
         return URL(string: "https://image.tmdb.org/t/p/" + size.rawValue + pathString)!
     }
 
+    private var pathString: String {
+        switch self {
+        case .popularMovies: return "/movie/popular"
+        case .popularActors: return "/person/popular"
+        case .similarMovies(let id): return "/movie/\(id)/similar"
+        }
+    }
+    
     private static func constructUrl(baseUrlString: String, pathString: String, extraParams: Params = [:]) -> URL {
         let url = URL(string: baseUrlString)!.appendingPathComponent(pathString)
         var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!

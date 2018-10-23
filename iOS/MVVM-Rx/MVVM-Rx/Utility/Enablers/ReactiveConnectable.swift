@@ -13,14 +13,14 @@ protocol ReactiveConnectable {
     associatedtype Output
 }
 
-protocol ReactiveTransforming: ReactiveConnectable {
+protocol ReactiveTransformable: ReactiveConnectable {
     associatedtype Input
     associatedtype Output
 
     func transform(input: Input) -> Output
 }
 
-protocol ReactiveFeeding: ReactiveConnectable {
+protocol ReactiveFeedable: ReactiveConnectable {
     associatedtype Input
     associatedtype Output
 

@@ -51,9 +51,7 @@ extension CatalogViewController: CatalogViewModelBindable {
             .disposed(by: disposeBag)
 
         viewModel.output.observableActors
-            .do(onNext: { actors in
-                self.title = "\(actors.count) Results"
-            })
+            .do(onNext: { actors in self.title = "\(actors.count) Results" })
             .drive(onNext: { [weak self] actors in
                 self?.tableDataSource.insert(actors)
                 self?.tableView.reloadData()

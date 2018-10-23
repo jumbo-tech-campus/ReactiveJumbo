@@ -22,9 +22,9 @@ class CatalogTableDataSource: NSObject {
 
         var title: String {
             switch self {
-            case .textField: return "textField.text -> searchTextSubject-input"
-            case .label: return "searchTextSubject-output -> label.text"
-            case .actor: return "viewWilAppear & pullRefresh -> refreshSubject"
+            case .textField: return "textField.text >> searchTextSubject-input"
+            case .label: return "label.text << searchTextSubject-output"
+            case .actor: return "viewWilAppear & pullRefresh >> refreshSubject"
             case .total: return ""
             }
         }
@@ -42,6 +42,7 @@ class CatalogTableDataSource: NSObject {
     var actorsCount: Int {
         return actors.count
     }
+    
     func insert(_ actors: [CatalogViewModel.RefinedActor]) {
         self.actors = actors
     }

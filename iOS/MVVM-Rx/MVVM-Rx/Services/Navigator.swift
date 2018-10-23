@@ -30,16 +30,27 @@ final class Navigator {
     }
 
     func toActorMovies(selectedActor: CatalogViewModel.RefinedActor) {
-        let moviesViewModel = MoviesViewModel(navigator: self, contentType: .actorMovies(selectedActor: selectedActor))
-        let moviesViewController = MoviesViewController(viewModel: moviesViewModel)
-
-        navigationController.pushViewController(moviesViewController, animated: true)
+        toMovies(ofType: .actorMovies(selectedActor: selectedActor))
     }
 
     func toSimilarMovies(selectedMovie: MoviesViewModel.RefinedMovie) {
-        let moviesViewModel = MoviesViewModel(navigator: self, contentType: .similarMovies(selectedMovie: selectedMovie))
-        let moviesViewController = MoviesViewController(viewModel: moviesViewModel)
-
-        navigationController.pushViewController(moviesViewController, animated: true)
+        toMovies(ofType: .similarMovies(selectedMovie: selectedMovie))
     }
+
+    private func toMovies(ofType type: MoviesViewModel.ContentType) {
+        var viewModel: MoviesViewModel
+
+        switch type {
+        case .actorMovies(selectedActor: let actor):
+            viewModel = MoviesViewModel(navigator: self, contentType: .actorMovies(selectedActor: actor))
+        case .similarMovies(selectedMovie: let movie):
+            viewModel = MoviesViewModel(navigator: self, contentType: .similarMovies(selectedMovie: movie))
+        }
+
+        navigationController.pushViewController(MoviesViewController(viewModel: viewModel), animated: true)
+    }
+
+
+
+
 }
