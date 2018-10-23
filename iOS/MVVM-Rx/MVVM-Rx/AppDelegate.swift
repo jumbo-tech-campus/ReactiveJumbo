@@ -15,7 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: CatalogViewController(viewModel: CatalogViewModel()))
+        let navigationController = UINavigationController()
+        let navigator = Navigator(navigationController: navigationController)
+        navigationController.setViewControllers([CatalogViewController(viewModel: CatalogViewModel(navigator: navigator))], animated: false)
+
+        window?.rootViewController = navigationController
 
         window?.makeKeyAndVisible()
 

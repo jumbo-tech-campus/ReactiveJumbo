@@ -17,47 +17,71 @@ final class CatalogViewModel {
     let input: ViewInput
     let output: ViewModelOutput
 
-    private let textFieldStringSubject = ReplaySubject<String>.create(bufferSize: 1)
+    private let searchTextSubject = ReplaySubject<String>.create(bufferSize: 1)
     private let refreshSubject = PublishSubject<Void>()
+    private let moviesNavigationSubject = PublishSubject<IndexPath>()
 
-    init() {
-        let observableTextFieldString = textFieldStringSubject
-            .map { "TextField Output: \($0)" }
-            .asDriver(onErrorJustReturn: "")
-        let observableActors = refreshSubject.flatMapLatest { _ in
-            return NetworkService.getPopularActors
-                .map { $0.compactMap { RefinedActor(raw: $0) } }
-                .asDriver(onErrorJustReturn: [])
-        }
-
-        self.output = Output(observableTextFieldString: observableTextFieldString,
-                             observableActors: observableActors.asDriver(onErrorJustReturn: []))
-        self.input = Input(onTextFieldChanged: textFieldStringSubject.asObserver(),
-                           onRefreshTriggered: refreshSubject.asObserver())
+    init(navigator: Navigator) {
+        let observableActors = CatalogViewModel.observableActors(subject: refreshSubject)
+        self.output = Output(observableSearchText: CatalogViewModel.observableSearchText(subject: searchTextSubject),
+                             observableActors: observableActors,
+                             navigateToMovies: CatalogViewModel.navigateToMovies(subject: moviesNavigationSubject,
+                                                                                 observableActors: observableActors,
+                                                                                 navigator: navigator))
+        self.input = Input(searchTextInput: searchTextSubject.asObserver(),
+                           refreshInput: refreshSubject.asObserver(),
+                           moviesNavigationInput: moviesNavigationSubject.asObserver())
     }
 }
 
 extension CatalogViewModel: ReactiveFeeding {
     struct ViewInput {
-        let onTextFieldChanged: AnyObserver<String>
-        let onRefreshTriggered: AnyObserver<Void>
+        let searchTextInput: AnyObserver<String>
+        let refreshInput: AnyObserver<Void>
+        var moviesNavigationInput: AnyObserver<IndexPath>
     }
     struct ViewModelOutput {
-        let observableTextFieldString: Driver<String>
+        let observableSearchText: Driver<String>
         let observableActors: Driver<[RefinedActor]>
+        let navigateToMovies: Driver<RefinedActor>
+    }
+
+    private static func observableSearchText(subject: ReplaySubject<String>) -> Driver<String> {
+        return subject.map { "Search text: \($0)" }.asDriver(onErrorJustReturn: "")
+    }
+
+    private static func observableActors(subject: PublishSubject<Void>) -> Driver<[RefinedActor]> {
+        return subject.flatMapLatest { _ in
+            return NetworkService.getPopularActors
+                .map { $0.compactMap { RefinedActor(raw: $0) } } }
+            .asDriver(onErrorJustReturn: [])
+    }
+
+    private static func navigateToMovies(subject: PublishSubject<IndexPath>, observableActors: Driver<[RefinedActor]>, navigator: Navigator) -> Driver<RefinedActor> {
+        return subject
+            .asDriver(onErrorJustReturn: IndexPath.init())
+            .withLatestFrom(observableActors) { (indexPath, refinedActors) -> RefinedActor in
+                return refinedActors[indexPath.row] }
+            .do(onNext: { (actor) in
+                navigator.toActorMovies(navigator: navigator, selectedActor: actor)
+            })
     }
 }
 
 extension CatalogViewModel {
     struct RefinedActor {
+        let id: Int
         let name: String
         let profileUrl: URL
         let popularityString: String
+        let popularMovies: [Movie]
 
         init(raw: Actor) {
+            self.id = raw.id
             self.name = raw.name
             self.profileUrl = TmdbEndpoint.imageUrl(pathString: raw.profilePath, size: .profileMedium)
             self.popularityString = "Votes: \(raw.popularity)"
+            self.popularMovies = raw.popularMovies ?? []
         }
     }
 }
@@ -70,10 +94,6 @@ extension CatalogViewModel: TableViewConfigurable {
             CellRegisterInfo(cellClass: ActorTableViewCell.self, reuseId: ActorTableViewCell.cellId, isXib: true)
         ]
     }
-    var rowHeight: CGFloat {
-        return 100.0
-    }
-    var isStylePlain: Bool {
-        return false
-    }
+    var rowHeight: CGFloat { return 100.0 }
+    var isStylePlain: Bool { return false }
 }

@@ -25,16 +25,16 @@
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="14X-UG-Oms">
-                        <rect key="frame" x="107.5" y="31.5" width="147.5" height="36.5"/>
+                        <rect key="frame" x="107.5" y="31.5" width="166.5" height="36.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Px-4o-m1y">
-                                <rect key="frame" x="0.0" y="0.0" width="147.5" height="20.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="166.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G7I-ff-ujg">
-                                <rect key="frame" x="0.0" y="20.5" width="147.5" height="16"/>
+                                <rect key="frame" x="0.0" y="20.5" width="166.5" height="16"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -42,8 +42,8 @@
                         </subviews>
                     </stackView>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BQk-8M-JYt">
-                        <rect key="frame" x="263" y="35" width="49" height="30"/>
-                        <state key="normal" title="Movies"/>
+                        <rect key="frame" x="282" y="35" width="30" height="30"/>
+                        <state key="normal" title="🔍"/>
                     </button>
                 </subviews>
                 <constraints>
@@ -59,6 +59,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="button" destination="BQk-8M-JYt" id="Ft0-Xr-yIa"/>
                 <outlet property="nameLabel" destination="0Px-4o-m1y" id="UKT-7z-pT5"/>
                 <outlet property="popularityLabel" destination="G7I-ff-ujg" id="K7Q-rZ-b8I"/>
                 <outlet property="profileImageView" destination="NTd-T6-SKl" id="PTO-C5-tzg"/>

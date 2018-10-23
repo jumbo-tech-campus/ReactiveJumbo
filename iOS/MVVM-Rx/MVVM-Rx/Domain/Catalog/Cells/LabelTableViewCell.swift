@@ -24,7 +24,7 @@ extension LabelTableViewCell: CatalogViewModelBindable {
     func bind(to viewModel: CatalogViewModel) {
         let bag = DisposeBag()
 
-        viewModel.output.observableTextFieldString
+        viewModel.output.observableSearchText
             .drive(textLabel!.rx.text)
             .disposed(by: bag)
 

@@ -22,10 +22,15 @@ struct NetworkService {
         return NetworkService.request(endpoint: .popularActors)
     }
 
+    static func getSimilarMovies(for id: Int) -> Observable<[Movie]> {
+        return NetworkService.request(endpoint: .similarMovies(id))
+    }
+
     private static func request<T: Decodable>(endpoint: TmdbEndpoint) -> Observable<[T]> {
         return URLSession.shared.rx
             .data(request: URLRequest(url: endpoint.url))
             .map({ data -> [T] in
+                print(try! JSONSerialization.jsonObject(with: data, options: []))
                 return (try JSONDecoder().decode(ResultsWrapper<T>.self, from: data)).results
             })
     }

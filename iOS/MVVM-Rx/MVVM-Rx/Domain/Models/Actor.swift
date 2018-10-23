@@ -13,6 +13,7 @@ struct Actor {
     let name: String
     let profilePath: String
     let popularity: Double
+    let popularMovies: [Movie]?
 }
 
 extension Actor: Decodable {
@@ -21,6 +22,7 @@ extension Actor: Decodable {
         case name = "name"
         case profilePath = "profile_path"
         case popularity = "popularity"
+        case popularMovies = "known_for"
     }
 
     init(from decoder: Decoder) throws {
@@ -29,6 +31,8 @@ extension Actor: Decodable {
         self.init(id: try container.decode(Int.self, forKey: .id),
                   name: try container.decode(String.self, forKey: .name),
                   profilePath: try container.decode(String.self, forKey: .profilePath),
-                  popularity: try container.decode(Double.self, forKey: .popularity))
+                  popularity: try container.decode(Double.self, forKey: .popularity),
+                  popularMovies: try? container.decode([Movie].self, forKey: .popularMovies)
+        )
     }
 }

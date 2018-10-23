@@ -47,5 +47,3 @@ extension CatalogTableDataSource: UITableViewDataSource {
         return cell
     }
 }
-
-extension CatalogTableDataSource: UITableViewDelegate {}

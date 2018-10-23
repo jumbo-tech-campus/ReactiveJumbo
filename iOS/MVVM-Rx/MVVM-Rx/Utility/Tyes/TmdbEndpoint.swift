@@ -8,15 +8,22 @@
 
 import Foundation
 
-enum TmdbEndpoint: String {
-    case popularMovies = "/movie/popular"
-    case popularActors = "/person/popular"
+enum TmdbEndpoint {
+    case popularMovies, popularActors, similarMovies(Int)
 
     static let baseUrlString = "https://api.themoviedb.org/3"
     static let apiKey = "91e3a1fc957cde9192fede75cedb96e2"
 
+    var pathString: String {
+        switch self {
+        case .popularMovies: return "/movie/popular"
+        case .popularActors: return "/person/popular"
+        case .similarMovies(let id): return "/movie/\(id)/similar"
+        }
+    }
+
     var url: URL {
-        return TmdbEndpoint.constructUrl(baseUrlString: TmdbEndpoint.baseUrlString, pathString: self.rawValue)
+        return TmdbEndpoint.constructUrl(baseUrlString: TmdbEndpoint.baseUrlString, pathString: self.pathString)
     }
 
     static func imageUrl(pathString: String, size: ImageSize) -> URL {

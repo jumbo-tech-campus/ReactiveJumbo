@@ -39,7 +39,7 @@ final class MoviesViewController: UIViewController {
     }
 }
 
-extension MoviesViewController: ViewModelBindable {
+extension MoviesViewController {
     func bind(to viewModel: MoviesViewModel) {
         let viewModelOutput = viewModel.transform(input: viewControllerInput)
 
@@ -55,8 +55,18 @@ extension MoviesViewController: ViewModelBindable {
             .disposed(by: disposeBag)
         
         viewModelOutput.observableMovies
-            .map { "\($0.count) movies retrieved" }
+            .map {
+                let count = "\($0.count) Movies"
+                switch viewModel.contentType {
+                case .actorMovies(let actor): return "\(count) from \(actor.name)"
+                case .similarMovies(let movie): return "\(count) similar to \(movie.title)"
+                }
+            }
             .drive(rx.title)
+            .disposed(by: disposeBag)
+
+        viewModelOutput.navigateToSimilarMovies
+            .drive()
             .disposed(by: disposeBag)
     }
 
@@ -66,8 +76,7 @@ extension MoviesViewController: ViewModelBindable {
             .asDriver(onErrorJustReturn: ())
         let onTableViewRefresh = tableView.refreshControl!.rx.controlEvent(.valueChanged)
             .asDriver()
-        let onFetchTrigger = Driver.merge(onViewWillAppear, onTableViewRefresh)
 
-        return MoviesViewModel.ViewControllerInput(onFetchTrigger: onFetchTrigger)
+        return MoviesViewModel.ViewControllerInput(onFetchTrigger: Driver.merge(onViewWillAppear, onTableViewRefresh), onCellTap: tableView.rx.itemSelected.asDriver())
     }
 }

@@ -15,7 +15,7 @@ final class CatalogViewController: UIViewController {
     private let viewModel: CatalogViewModel
     private let tableDataSource: CatalogTableDataSource
     private lazy var tableView: UITableView = { [unowned self] in
-        let tableView = UITableView(viewModel: self.viewModel, frame: self.view.bounds, datasource: self.tableDataSource, delegate: self.tableDataSource)
+        let tableView = UITableView(viewModel: self.viewModel, frame: self.view.bounds, datasource: self.tableDataSource)
         tableView.refreshControl = UIRefreshControl()
 
         return tableView
@@ -40,17 +40,17 @@ final class CatalogViewController: UIViewController {
 
 extension CatalogViewController: CatalogViewModelBindable {
     func bind(to viewModel: CatalogViewModel) {
-        bindViewControllerInput(input: viewModel.input)
-        bindViewModelOutput(output: viewModel.output)
+        bindViewControllerInput(to: viewModel)
+        bindViewModelOutput(from: viewModel)
     }
 
-    private func bindViewModelOutput(output: CatalogViewModel.ViewModelOutput) {
-        output.observableActors
+    private func bindViewModelOutput(from viewModel: CatalogViewModel) {
+        viewModel.output.observableActors
             .map { _ in false }.startWith(true)
             .drive(tableView.refreshControl!.rx.isRefreshing)
             .disposed(by: disposeBag)
 
-        output.observableActors
+        viewModel.output.observableActors
             .do(onNext: { actors in
                 self.title = "\(actors.count) Results"
             })
@@ -59,16 +59,24 @@ extension CatalogViewController: CatalogViewModelBindable {
                 self?.tableView.reloadData()
             })
             .disposed(by: disposeBag)
+
+        viewModel.output.navigateToMovies
+            .drive()
+            .disposed(by: disposeBag)
     }
 
-    private func bindViewControllerInput(input: CatalogViewModel.ViewInput) {
+    private func bindViewControllerInput(to viewModel: CatalogViewModel) {
         let onViewWillAppear = rx.sentMessage(#selector(viewWillAppear(_:)))
             .map { _ in }
-            .asDriver(onErrorJustReturn: ())
-        let onTableViewRefresh = tableView.refreshControl!.rx.controlEvent(.valueChanged)
-            .asDriver()
-        Driver.merge(onViewWillAppear, onTableViewRefresh)
-            .drive(input.onRefreshTriggered)
+        let onTableViewRefresh = tableView.refreshControl!.rx.controlEvent(.valueChanged).asObservable()
+
+        Observable.merge(onViewWillAppear, onTableViewRefresh)
+            .bind(to: viewModel.input.refreshInput)
+            .disposed(by: disposeBag)
+
+        tableView.rx.itemSelected
+            .asObservable()
+            .bind(to: viewModel.input.moviesNavigationInput)
             .disposed(by: disposeBag)
     }
 }

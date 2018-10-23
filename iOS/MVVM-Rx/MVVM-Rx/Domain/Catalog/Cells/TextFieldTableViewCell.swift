@@ -12,8 +12,9 @@ import RxCocoa
 
 class TextFieldTableViewCell: UITableViewCell {
     static let cellId = String(describing: TextFieldTableViewCell.self)
-    @IBOutlet weak var textField: UITextField!
     var disposeBag: DisposeBag?
+    
+    @IBOutlet weak var textField: UITextField!
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -27,7 +28,7 @@ extension TextFieldTableViewCell: CatalogViewModelBindable {
 
         textField.rx.text
             .orEmpty
-            .bind(to: viewModel.input.onTextFieldChanged)
+            .bind(to: viewModel.input.searchTextInput)
             .disposed(by: bag)
 
         disposeBag = bag

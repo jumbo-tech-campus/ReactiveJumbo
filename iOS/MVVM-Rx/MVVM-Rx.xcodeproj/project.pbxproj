@@ -17,7 +17,6 @@
 		C7AC0ED4217D8AE900871A7E /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0ED1217D8AE900871A7E /* Movie.swift */; };
 		C7AC0ED5217D8AE900871A7E /* ResultsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0ED2217D8AE900871A7E /* ResultsWrapper.swift */; };
 		C7AC0ED7217D8AEF00871A7E /* CellRegisterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0ED6217D8AEF00871A7E /* CellRegisterInfo.swift */; };
-		C7AC0EDC217D8B1700871A7E /* ModelRefining.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0ED8217D8B1600871A7E /* ModelRefining.swift */; };
 		C7AC0EDD217D8B1700871A7E /* ReactiveConnectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0ED9217D8B1700871A7E /* ReactiveConnectable.swift */; };
 		C7AC0EDE217D8B1700871A7E /* TableViewConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0EDA217D8B1700871A7E /* TableViewConfigurable.swift */; };
 		C7AC0EE3217D90D400871A7E /* CatalogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0EE2217D90D400871A7E /* CatalogViewModel.swift */; };
@@ -28,12 +27,12 @@
 		C7AC0EEF217DA7F900871A7E /* CatalogTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0EEE217DA7F900871A7E /* CatalogTableDataSource.swift */; };
 		C7AC0EF2217DAB9C00871A7E /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0EF0217DAB9C00871A7E /* MovieTableViewCell.swift */; };
 		C7AC0EF3217DAB9C00871A7E /* MovieTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7AC0EF1217DAB9C00871A7E /* MovieTableViewCell.xib */; };
-		C7AC0EF5217DB0B600871A7E /* ViewModelBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0EF4217DB0B600871A7E /* ViewModelBindable.swift */; };
 		C7AC0EFD217DEAF700871A7E /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0EFB217DEAF700871A7E /* TextFieldTableViewCell.swift */; };
 		C7AC0EFE217DEAF700871A7E /* TextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7AC0EFC217DEAF700871A7E /* TextFieldTableViewCell.xib */; };
 		C7AC0F03217E0D2800871A7E /* ActorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0F01217E0D2800871A7E /* ActorTableViewCell.swift */; };
 		C7AC0F04217E0D2800871A7E /* ActorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7AC0F02217E0D2800871A7E /* ActorTableViewCell.xib */; };
 		C7AC0F06217E18F500871A7E /* LabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC0F05217E18F500871A7E /* LabelTableViewCell.swift */; };
+		C7D6A50F217E6B5300F79BE5 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D6A50E217E6B5300F79BE5 /* Navigator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +49,6 @@
 		C7AC0ED1217D8AE900871A7E /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		C7AC0ED2217D8AE900871A7E /* ResultsWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsWrapper.swift; sourceTree = "<group>"; };
 		C7AC0ED6217D8AEF00871A7E /* CellRegisterInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellRegisterInfo.swift; sourceTree = "<group>"; };
-		C7AC0ED8217D8B1600871A7E /* ModelRefining.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelRefining.swift; sourceTree = "<group>"; };
 		C7AC0ED9217D8B1700871A7E /* ReactiveConnectable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveConnectable.swift; sourceTree = "<group>"; };
 		C7AC0EDA217D8B1700871A7E /* TableViewConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewConfigurable.swift; sourceTree = "<group>"; };
 		C7AC0EE2217D90D400871A7E /* CatalogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewModel.swift; sourceTree = "<group>"; };
@@ -61,12 +59,12 @@
 		C7AC0EEE217DA7F900871A7E /* CatalogTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogTableDataSource.swift; sourceTree = "<group>"; };
 		C7AC0EF0217DAB9C00871A7E /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		C7AC0EF1217DAB9C00871A7E /* MovieTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieTableViewCell.xib; sourceTree = "<group>"; };
-		C7AC0EF4217DB0B600871A7E /* ViewModelBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindable.swift; sourceTree = "<group>"; };
 		C7AC0EFB217DEAF700871A7E /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		C7AC0EFC217DEAF700871A7E /* TextFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		C7AC0F01217E0D2800871A7E /* ActorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorTableViewCell.swift; sourceTree = "<group>"; };
 		C7AC0F02217E0D2800871A7E /* ActorTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActorTableViewCell.xib; sourceTree = "<group>"; };
 		C7AC0F05217E18F500871A7E /* LabelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTableViewCell.swift; sourceTree = "<group>"; };
+		C7D6A50E217E6B5300F79BE5 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		DBE73FB1AF0B7C203AF24744 /* Pods_MVVM_Rx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MVVM_Rx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -147,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				C7AC0ECC217D8AA500871A7E /* NetworkService.swift */,
+				C7D6A50E217E6B5300F79BE5 /* Navigator.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -204,8 +203,6 @@
 			children = (
 				C7AC0ED9217D8B1700871A7E /* ReactiveConnectable.swift */,
 				C7AC0EDA217D8B1700871A7E /* TableViewConfigurable.swift */,
-				C7AC0EF4217DB0B600871A7E /* ViewModelBindable.swift */,
-				C7AC0ED8217D8B1600871A7E /* ModelRefining.swift */,
 			);
 			path = Enablers;
 			sourceTree = "<group>";
@@ -361,8 +358,7 @@
 				C7AC0ED5217D8AE900871A7E /* ResultsWrapper.swift in Sources */,
 				C7AC0EE5217D90FE00871A7E /* CatalogViewController.swift in Sources */,
 				C7AC0F03217E0D2800871A7E /* ActorTableViewCell.swift in Sources */,
-				C7AC0EF5217DB0B600871A7E /* ViewModelBindable.swift in Sources */,
-				C7AC0EDC217D8B1700871A7E /* ModelRefining.swift in Sources */,
+				C7D6A50F217E6B5300F79BE5 /* Navigator.swift in Sources */,
 				C7AC0EE9217D911F00871A7E /* MoviesViewModel.swift in Sources */,
 				C7AC0ED7217D8AEF00871A7E /* CellRegisterInfo.swift in Sources */,
 				C7AC0EE7217D911300871A7E /* MoviesViewController.swift in Sources */,

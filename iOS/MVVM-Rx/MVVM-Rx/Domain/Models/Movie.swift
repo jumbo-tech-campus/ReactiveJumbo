@@ -9,12 +9,14 @@
 import Foundation
 
 struct Movie {
+    let id: Int
     let title: String
     let backdropPath: String
 }
 
 extension Movie: Decodable {
     enum MovieKeys: String, CodingKey {
+        case id = "id"
         case title = "title"
         case backdropPath = "backdrop_path"
     }
@@ -22,7 +24,8 @@ extension Movie: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: MovieKeys.self)
 
-        self.init(title: try container.decode(String.self, forKey: .title),
+        self.init(id: try container.decode(Int.self, forKey: .id),
+                  title: try container.decode(String.self, forKey: .title),
                   backdropPath: try container.decode(String.self, forKey: .backdropPath))
     }
 }
