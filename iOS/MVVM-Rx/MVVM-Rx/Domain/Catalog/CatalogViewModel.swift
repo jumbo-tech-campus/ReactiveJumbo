@@ -63,7 +63,7 @@ extension CatalogViewModel: ReactiveFeeding {
             .withLatestFrom(observableActors) { (indexPath, refinedActors) -> RefinedActor in
                 return refinedActors[indexPath.row] }
             .do(onNext: { (actor) in
-                navigator.toActorMovies(navigator: navigator, selectedActor: actor)
+                navigator.toActorMovies(selectedActor: actor)
             })
     }
 }

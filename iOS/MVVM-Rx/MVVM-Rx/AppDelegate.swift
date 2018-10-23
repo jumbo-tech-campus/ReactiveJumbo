@@ -15,14 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let navigationController = UINavigationController()
-        let navigator = Navigator(navigationController: navigationController)
-        navigationController.setViewControllers([CatalogViewController(viewModel: CatalogViewModel(navigator: navigator))], animated: false)
+        let navigator = Navigator(navigationController: UINavigationController(), window: window)
 
-        window?.rootViewController = navigationController
-
-        window?.makeKeyAndVisible()
-
-        return true
+        return navigator.appEntry()
     }
 }

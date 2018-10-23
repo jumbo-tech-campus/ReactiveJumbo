@@ -10,6 +10,10 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+protocol MoviesViewModelBindable {
+    func bind(to viewModel: MoviesViewModel)
+}
+
 final class MoviesViewModel {
     enum ContentType {
         case actorMovies(selectedActor: CatalogViewModel.RefinedActor)
@@ -26,7 +30,7 @@ final class MoviesViewModel {
 
 extension MoviesViewModel: ReactiveTransforming {
     struct ViewControllerInput {
-        let onFetchTrigger: Driver<()>
+        let onViewWillAppear: Driver<()>
         let onCellTap: Driver<IndexPath>
     }
 
@@ -42,7 +46,7 @@ extension MoviesViewModel: ReactiveTransforming {
         case .actorMovies(selectedActor: let refinedActor):
             observableMovies = Driver.just(refinedActor.popularMovies.map { RefinedMovie(raw: $0) })
         case .similarMovies(selectedMovie: let refinedMovie):
-            observableMovies = input.onFetchTrigger.flatMapLatest { _ in
+            observableMovies = input.onViewWillAppear.flatMapLatest { _ in
                 return NetworkService.getSimilarMovies(for: refinedMovie.id)
                     .map { $0.compactMap { RefinedMovie(raw: $0) } }
                     .asDriver(onErrorJustReturn: [])
@@ -54,7 +58,7 @@ extension MoviesViewModel: ReactiveTransforming {
                 return refinedMovies[indexPath.row]
             }.do(onNext: { [weak self] refinedMovie in
                 guard let strongSelf = self else { return }
-                strongSelf.navigator.toSimilarMovies(navigator: strongSelf.navigator, selectedMovie: refinedMovie)
+                strongSelf.navigator.toSimilarMovies(selectedMovie: refinedMovie)
             })
 
         return ViewModelOutput(observableMovies: observableMovies, navigateToSimilarMovies: navigateToSimilarMovies)

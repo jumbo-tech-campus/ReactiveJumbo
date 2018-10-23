@@ -9,21 +9,35 @@
 import UIKit
 
 final class Navigator {
+    private let window: UIWindow?
     private let navigationController: UINavigationController
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, window: UIWindow?) {
+        self.window = window
         self.navigationController = navigationController
     }
 
-    func toActorMovies(navigator: Navigator, selectedActor: CatalogViewModel.RefinedActor) {
-        let moviesViewModel = MoviesViewModel(navigator: navigator, contentType: .actorMovies(selectedActor: selectedActor))
+    @discardableResult
+    func appEntry() -> Bool {
+        let catalogViewController = CatalogViewController(viewModel: CatalogViewModel(navigator: self))
+        navigationController.setViewControllers([catalogViewController], animated: false)
+
+        window?.rootViewController = navigationController
+
+        window?.makeKeyAndVisible()
+
+        return true
+    }
+
+    func toActorMovies(selectedActor: CatalogViewModel.RefinedActor) {
+        let moviesViewModel = MoviesViewModel(navigator: self, contentType: .actorMovies(selectedActor: selectedActor))
         let moviesViewController = MoviesViewController(viewModel: moviesViewModel)
 
         navigationController.pushViewController(moviesViewController, animated: true)
     }
 
-    func toSimilarMovies(navigator: Navigator, selectedMovie: MoviesViewModel.RefinedMovie) {
-        let moviesViewModel = MoviesViewModel(navigator: navigator, contentType: .similarMovies(selectedMovie: selectedMovie))
+    func toSimilarMovies(selectedMovie: MoviesViewModel.RefinedMovie) {
+        let moviesViewModel = MoviesViewModel(navigator: self, contentType: .similarMovies(selectedMovie: selectedMovie))
         let moviesViewController = MoviesViewController(viewModel: moviesViewModel)
 
         navigationController.pushViewController(moviesViewController, animated: true)

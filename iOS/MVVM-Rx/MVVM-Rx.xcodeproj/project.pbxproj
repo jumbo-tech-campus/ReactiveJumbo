@@ -145,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				C7AC0ECC217D8AA500871A7E /* NetworkService.swift */,
+				C7AC0ECB217D8AA500871A7E /* TmdbEndpoint.swift */,
 				C7D6A50E217E6B5300F79BE5 /* Navigator.swift */,
 			);
 			path = Services;
@@ -211,7 +212,6 @@
 			isa = PBXGroup;
 			children = (
 				C7AC0ED6217D8AEF00871A7E /* CellRegisterInfo.swift */,
-				C7AC0ECB217D8AA500871A7E /* TmdbEndpoint.swift */,
 			);
 			path = Tyes;
 			sourceTree = "<group>";

@@ -15,12 +15,7 @@ import RxCocoa
 final class MoviesViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: MoviesViewModel
-    private lazy var tableView: UITableView = { [unowned self] in
-        let tableView = UITableView(viewModel: self.viewModel, frame: self.view.bounds)
-        tableView.refreshControl = UIRefreshControl()
-
-        return tableView
-    }()
+    private lazy var tableView = UITableView(viewModel: self.viewModel, frame: self.view.bounds)
 
     init(viewModel: MoviesViewModel) {
         self.viewModel = viewModel
@@ -39,7 +34,7 @@ final class MoviesViewController: UIViewController {
     }
 }
 
-extension MoviesViewController {
+extension MoviesViewController: MoviesViewModelBindable {
     func bind(to viewModel: MoviesViewModel) {
         let viewModelOutput = viewModel.transform(input: viewControllerInput)
 
@@ -48,11 +43,6 @@ extension MoviesViewController {
 
                 movieCell.configure(with: refinedMovie)
             }.disposed(by: disposeBag)
-
-        viewModelOutput.observableMovies
-            .map { _ in false }.startWith(true)
-            .drive(tableView.refreshControl!.rx.isRefreshing)
-            .disposed(by: disposeBag)
         
         viewModelOutput.observableMovies
             .map {
@@ -74,9 +64,7 @@ extension MoviesViewController {
         let onViewWillAppear = rx.sentMessage(#selector(viewWillAppear(_:)))
             .map { _ in }
             .asDriver(onErrorJustReturn: ())
-        let onTableViewRefresh = tableView.refreshControl!.rx.controlEvent(.valueChanged)
-            .asDriver()
 
-        return MoviesViewModel.ViewControllerInput(onFetchTrigger: Driver.merge(onViewWillAppear, onTableViewRefresh), onCellTap: tableView.rx.itemSelected.asDriver())
+        return MoviesViewModel.ViewControllerInput(onViewWillAppear: onViewWillAppear, onCellTap: tableView.rx.itemSelected.asDriver())
     }
 }
